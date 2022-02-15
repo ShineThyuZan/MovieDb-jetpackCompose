@@ -7,19 +7,18 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.composed
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.zzzcovid_jetpackcompose.ui.theme.ZzzCovidjetpackComposeTheme
-import java.lang.reflect.Modifier
+
 
 
 class MainActivity : ComponentActivity() {
@@ -29,8 +28,6 @@ class MainActivity : ComponentActivity() {
             ZzzCovidjetpackComposeTheme() {
                 MessageCard( Message("I m from Venus", "Mr Bean"))
             }
-
-
         }
     }
 }
@@ -42,7 +39,7 @@ fun MessageCard(msg: Message) {
 
         // Add padding around our message
         Row(
-            modifier = androidx.compose.ui.Modifier
+            modifier = Modifier
                 .padding(all = 8.dp)) {
             Image(
                 painter = painterResource(R.drawable.ic_upload),
@@ -53,24 +50,23 @@ fun MessageCard(msg: Message) {
                     // Clip image to be shaped as a circle
                     .clip(CircleShape)
                     .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
-
             )
 
             // Add a horizontal space between the image and the column
-            Spacer(modifier = androidx.compose.ui.Modifier.height(16.dp))
-            Spacer(modifier = androidx.compose.ui.Modifier.width(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.width(16.dp))
 
             Column {
                 Text(text = msg.author,
                 color = MaterialTheme.colors.error,
                 style = MaterialTheme.typography.h5)
                 // Add a vertical space between the author and message texts
-                Spacer(modifier = androidx.compose.ui.Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
                     Text(
                         text = msg.body,
-                        modifier = androidx.compose.ui.Modifier.padding(all = 4.dp),
+                        modifier = Modifier.padding(all = 4.dp),
                         style = MaterialTheme.typography.body2
                     )
                 }
