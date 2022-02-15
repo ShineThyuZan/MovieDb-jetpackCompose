@@ -1,54 +1,96 @@
 package com.example.zzzcovid_jetpackcompose
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.zzzcovid_jetpackcompose.ui.theme.ZzzCovidjetpackComposeTheme
+import java.lang.reflect.Modifier
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ZzzCovidjetpackComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                  BoxLayout()
-                }
+            ZzzCovidjetpackComposeTheme() {
+                MessageCard( Message("I m from Venus", "Mr Bean"))
             }
+
+
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
+data class Message(val author: String, val body: String)
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    ZzzCovidjetpackComposeTheme {
-        Greeting("Android")
+fun MessageCard(msg: Message) {
+
+        // Add padding around our message
+        Row(
+            modifier = androidx.compose.ui.Modifier
+                .padding(all = 8.dp)) {
+            Image(
+                painter = painterResource(R.drawable.ic_upload),
+                contentDescription = "Contact profile picture",
+                modifier = androidx.compose.ui.Modifier
+                    // Set image size to 40 dp
+                    .height(40.dp)
+                    // Clip image to be shaped as a circle
+                    .clip(CircleShape)
+                    .border(1.5.dp, MaterialTheme.colors.secondary, CircleShape)
+
+            )
+
+            // Add a horizontal space between the image and the column
+            Spacer(modifier = androidx.compose.ui.Modifier.height(16.dp))
+            Spacer(modifier = androidx.compose.ui.Modifier.width(16.dp))
+
+            Column {
+                Text(text = msg.author,
+                color = MaterialTheme.colors.error,
+                style = MaterialTheme.typography.h5)
+                // Add a vertical space between the author and message texts
+                Spacer(modifier = androidx.compose.ui.Modifier.height(4.dp))
+
+                Surface(shape = MaterialTheme.shapes.medium, elevation = 1.dp) {
+                    Text(
+                        text = msg.body,
+                        modifier = androidx.compose.ui.Modifier.padding(all = 4.dp),
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+            }
     }
 }
 
+
+@Preview(name = "Light mode")
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    name = "No more dark mode"
+)
 @Composable
-fun BoxLayout(){
-    Box( modifier = Modifier.size(200.dp))
+fun PreviewMessageCard() {
+
+    ZzzCovidjetpackComposeTheme() {
+        MessageCard( Message("I m from Venus", "Mr Bean"))
+
+    }
+
 }
